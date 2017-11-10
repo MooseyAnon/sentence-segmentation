@@ -4,7 +4,7 @@ from sentence_seg import *
 
 def switch(pat, pos):
 	"""
-	this func flips 0's and 1's in order to change where the sentence/word is segmented.
+	this func switches 0's and 1's in order to change where the sentence/word is segmented.
 
 	the pattern is split at the index corrisponding with pos. The item at that location is then subtracted 
 
@@ -13,7 +13,7 @@ def switch(pat, pos):
 	ex: 
 	pat = "0000"
 
-	flip(pat, 2) 
+	swicth(pat, 2) 
 
 	return 0010 where the word is split at 1
 
@@ -25,7 +25,7 @@ def switch(pat, pos):
 def switch_n(pat, n):
 
 	"""
-	this func runs the flip aglo n number of times at a (psudo) random point in the pattern
+	switch_n runs the swicth aglo n number of times at a (psudo) random point in the pattern
 
 	"""
 
