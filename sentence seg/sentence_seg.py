@@ -4,7 +4,8 @@ from random import randint
 
 
 def sen_seg(astr, pattern):
-	"""takes a string, a pattern and returns a split string based on pattern """ 
+	"""takes a string, a pattern and returns a split string based on pattern. Used to slit inporperly specerated 
+	senetences/words """ 
 
 	word_list = []
 	last = 0
@@ -17,7 +18,9 @@ def sen_seg(astr, pattern):
 	return word_list
 
 
-def evaluate(astr, pattern):
+def fitness_score(astr, pattern):
+	"""assigns a fitness score to the pattern by adding number of characters in the words list after 
+	splitting to the lexicon size (number of individual words in string) """
 
 	words = sen_seg(astr, pattern)
 	t_size = len(words)

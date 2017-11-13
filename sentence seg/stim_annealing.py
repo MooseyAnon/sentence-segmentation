@@ -1,3 +1,4 @@
+import math
 from random import random
 from sentence_seg import *
 
@@ -34,27 +35,47 @@ def switch_n(pat, n):
 	return pat
 
 
+def acceptance_prob(oldbest, newbest, temp):
+
+	delta_score = float(oldbest - newbest)
+	e = oldbest
+	a = e**(delta_score/temp)
+	# could have used math.exp(delta_score/temp) instead of oldbest as e 
+	if a > 1:
+		return 1 
+	else:
+		return float(a)
 
 
 def stim_anneal(pat, string, epochs, cool_rate):
 
 	"""
-	A stimulated annealing algo to minimise the evaluation score of the pattern
+	A stimulated annealing algo to minimise the fitness score of the pattern
 	"""
 	temp = float(len(pat)) # arbitrary value for the tempreture. Should be decently high number 
 	while temp > 0.5:
-		best_pat, best = pat, evaluate(string, pat) # initialise first values for the 'best pattern' and 'best score'. These are the values to be measured against
+		best_pat, best = pat, fitness_score(string, pat) # initialise first values for the 'best pattern' and 'best score'. These are the values to be measured against
 		for i in range(epochs): # number of cycles we want the algo to go for
 			guess = switch_n(pat, int(round(temp)))
-			score = evaluate(string, guess)
+			score = fitness_score(string, guess)
+			ap = acceptance_prob(best, score, temp)
 			if score < best: # check if new score is lower than last best score (we want to minimise eval score)
 				best_pat, best = guess, score # if new score is better, update 'best pattern' and 'best score'
-			# need to add =~ esle if (E ^ (∆E/temp) > random.random(0.0, 1.0)
+			elif ap > random():
+				best_pat, best = guess, score
 
 		score, pat = best, best_pat # update score and pattern for new cycle
 		temp = temp / cool_rate # lower tempreture 
 
-		print evaluate(string, pat), sen_seg(string, pat)
+		print fitness_score(string, pat), sen_seg(string, pat)
 		print 
 		print pat
+
+
+
+
+
+
+stim_anneal(pat, st, 5000, 1.2)
+
 
